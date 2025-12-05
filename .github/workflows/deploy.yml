@@ -12,10 +12,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
-          cache: "yarn"
-      - run: yarn install
-      - run: yarn build
-      # The deploy step uses the API key we stored earlier
+          cache: "npm" # Changed from 'yarn' to 'npm'
+      
+      # We use 'npm ci' for a clean install from the lockfile
+      - run: npm ci 
+      
+      # We use 'npm run build' to trigger the build script
+      - run: npm run build 
+      
       - uses: bcomnes/deploy-to-neocities@v1
         with:
           api_token: ${{ secrets.NEOCITIES_TOKEN }}
